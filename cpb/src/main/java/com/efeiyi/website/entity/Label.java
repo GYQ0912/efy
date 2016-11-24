@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Label extends Entity {
     private String id;
-    private long serial;
-    private String code;
+    private long serial;//序列号
+    private String code;//防伪码
     private String labelBatchId;
     private String tenantId;
-    private String status;
+    private String status;//1.未分配  2.已分配  3.已激活  4.已作废
     private Date firstCheckDateTime;
     private Date lastCheckDateTime;
     private int checkCount;

@@ -26,13 +26,32 @@ public class LabelService extends BaseService<Label> implements ILabelService {
     @Override
     public void getLabels(List<Label> list) throws Exception {
         LabelDao labelDao = new LabelDao();
-        labelDao.get("get_all_label", new Object[]{}, list);
+        labelDao.getAllLabel(list);
     }
 
     @Override
     public void getLabelByCode(String code, Label label, Connection conn) throws Exception {
         LabelDao labelDao = new LabelDao();
-        labelDao.get("get_label_by_code", new Object[]{code}, label, conn);
+        labelDao.getLabelByCode(code, label, conn);
+    }
+
+    @Override
+    public void getLabelList(List<Label> labelList, String labelBatchId) throws Exception {
+        LabelDao labelDao = new LabelDao();
+        labelDao.getLabelList(labelList, labelBatchId, "3");
+    }
+
+    @Override
+    public void updateLabel(String labelId, String code, Connection conn) throws Exception {
+        LabelDao labelDao = new LabelDao();
+        labelDao.updateCodeById(labelId, code, conn);
+    }
+
+    @Override
+    public Label getLabelByIdAndCode(String labelId, String code, Connection conn) throws Exception {
+        LabelDao labelDao = new LabelDao();
+        Label label = labelDao.getLabelByIdAndCode(labelId, code, conn);
+        return label;
     }
 
 }

@@ -3,19 +3,23 @@ package com.efeiyi.website.controller;
 import com.efeiyi.website.dao.ConnectionPool;
 import com.efeiyi.website.entity.Label;
 import com.efeiyi.website.entity.Product;
+import com.efeiyi.website.service.Session;
 import com.efeiyi.website.service.inter.ILabelService;
 import com.efeiyi.website.service.inter.IProductService;
 import com.efeiyi.website.util.ApplicationException;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/10/21.
@@ -62,40 +66,136 @@ public class LabelController extends BaseController {
 
         try {
             conn = ConnectionPool.get().getConnection();
-
-            labelService.getLabelByCode(code, label, conn);
-
-            if(label.getId() == null) {
-                responseEmpty(request, response);
-                return;
-            }
-
-            String polId = label.getPurchaseOrderLabelId();
-
-            if(polId == null) {
-                responseEmpty(request, response);
-                return;
-            }
-
-            Product product = new Product();
-            productService.getProductByPurchaseOrderLabelId(polId, product, conn);
-
-            if(product.getId() == null) {
-                responseEmpty(request, response);
-                return;
-            }
-
-            responseSuccess(request, response, product);
         } catch (Exception e) {
             responseException(request, response, ApplicationException.INNER_ERROR);
             return;
-        } finally {
-            ConnectionPool.get().free(conn);
         }
 
+        try {
+            labelService.getLabelByCode(code, label, conn);
+        } catch (Exception e) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        if(label.getId() == null) {
+            responseEmpty(request, response);
+            return;
+        }
+
+        String polId = label.getPurchaseOrderLabelId();
+
+        if(polId == null) {
+            responseEmpty(request, response);
+            return;
+        }
+
+        Product product = new Product();
+        try {
+            productService.getProductByPurchaseOrderLabelId(polId, product, conn);
+        } catch (Exception e) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        if(product.getId() == null) {
+            responseEmpty(request, response);
+            return;
+        }
+
+        ConnectionPool.get().free(conn);
+        responseSuccess(request, response, product);
     }
 
-    public static void main(String[] args) {
-        System.out.print("main");
+    @RequestMapping("getUsableLabelList")
+    public void getUsableLabelList(HttpServletRequest request, HttpServletResponse response) {
+        List<Label> labelList = new ArrayList<>();
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = receiveJson(request);
+        } catch (Exception e) {
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        String labelBatchId = jsonObject.getString("labelBatchId");
+
+        try {
+            labelService.getLabelList(labelList, labelBatchId);
+        } catch (Exception e) {
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        HttpSession session = request.getSession();
+        Label usableLabel = null;
+        for(Label label : labelList) {
+            Object obj = session.getAttribute(label.getId() + "_occupied");
+            if(obj != null) {
+                continue;
+            }
+            session.setAttribute(label.getId() + "_occupied", label);
+            usableLabel = label;
+            break;
+        }
+
+        if(usableLabel == null) {
+            responseEmpty(request, response);
+            return;
+        }
+
+        responseContent(request, response, usableLabel);
+    }
+
+    @RequestMapping("writeCode")
+    public void writeCode(HttpServletRequest request, HttpServletResponse response) {
+        Connection conn = null;
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = receiveJson(request);
+        } catch (Exception e) {
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        try {
+            conn = ConnectionPool.get().getConnection();
+        } catch (Exception e) {
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        String labelId = jsonObject.getString("labelId");
+        String code = jsonObject.getString("code");
+
+        Label label = null;
+        try {
+            label = labelService.getLabelByIdAndCode(labelId, code, conn);
+        } catch (Exception e) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        if(label != null) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.WROTE_CODE_ERROR);
+            return;
+        }
+
+        try {
+            labelService.updateLabel(labelId, code, conn);
+        } catch (Exception e) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.INNER_ERROR);
+            return;
+        }
+
+        ConnectionPool.get().free(conn);
+        responseSuccess(request, response);
     }
 }

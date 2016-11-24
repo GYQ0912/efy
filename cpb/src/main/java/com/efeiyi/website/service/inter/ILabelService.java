@@ -15,4 +15,10 @@ public interface ILabelService {
     void getLabels(List<Label> list) throws Exception;
 
     void getLabelByCode(String code, Label label, Connection conn) throws Exception;
+
+    void getLabelList(List<Label> labelList, String labelBatchId) throws Exception;
+
+    void updateLabel(String labelId, String code, Connection conn) throws Exception;
+
+    Label getLabelByIdAndCode(String labelId, String code, Connection conn) throws Exception;
 }

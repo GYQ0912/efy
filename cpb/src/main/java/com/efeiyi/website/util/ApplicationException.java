@@ -11,8 +11,9 @@ public class ApplicationException extends Exception {
 
 	public static int INNER_ERROR = 0x01;
 	public static int INVALID_CODE_ERROR = 0x02;
+	public static int WROTE_CODE_ERROR = 0x03;
 
-	private static final String[] ERROR_DESC_LIST = new String[] { "", "内部错误.", "防伪码无效"};
+	private static final String[] ERROR_DESC_LIST = new String[] { "", "内部错误.", "防伪码无效", "防伪码已写入"};
 
 	private int code;
 	private String description;

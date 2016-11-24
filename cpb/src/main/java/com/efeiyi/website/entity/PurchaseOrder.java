@@ -10,7 +10,7 @@ public class PurchaseOrder extends Entity {
     private String tenantId;
     private String userId;
     private Date createDatetime;
-    private String status;
+    private String status;//1.未支付
     private List<PurchaseOrderLabel> purchaseOrderLabelList;
     private List<PurchaseOrderPayment> purchaseOrderPaymentList;
 

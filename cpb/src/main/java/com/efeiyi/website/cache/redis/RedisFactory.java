@@ -29,7 +29,8 @@ public class RedisFactory {
     }
 
     private RedisFactory() throws Exception {
-        initJedisPool();
+        //initJedisPool();
+        initJedisCluster();
     }
 
     //@TODO 待深入测试
@@ -58,10 +59,10 @@ public class RedisFactory {
             config.setTestOnBorrow(true);
             jedisPool = new JedisPool(
                     config,
-                    redisProps.getProperty("redis.hostName", "localhost"),
-                    Integer.parseInt(redisProps.getProperty("redis.port", "7000")),
-                    Integer.parseInt(redisProps.getProperty("redis.timeout", "100000")),
-                    redisProps.getProperty("redis.password")
+                    redisProps.getProperty("redis.hostName"/*, "localhost"*/),
+                    Integer.parseInt(redisProps.getProperty("redis.port"/*, "7000"*/)),
+                    Integer.parseInt(redisProps.getProperty("redis.timeout", "100000"))
+                    /*redisProps.getProperty("redis.password")*/
             );
         }
     }
@@ -79,7 +80,6 @@ public class RedisFactory {
         Jedis jedis = getJedisPool().getResource();
         return new JedisProxy(jedis, Integer.parseInt(redisProps.getProperty("redis.key.expire", "360000")));
 //        return new JedisClusterProxy(jedisCluster, Integer.parseInt(redisProps.getProperty("redis.key.expire", "360000")));
-
     }
 
 

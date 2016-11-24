@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 import java.util.List;
@@ -44,7 +45,7 @@ public class BaseController {
     public <T extends Entity> void responseContent(HttpServletRequest request, HttpServletResponse response, T entity) {
         JSONObject result = new JSONObject();
         result.element("sum", 1);
-        result.element("data  ", entity.toJson());
+        result.element("data", entity.toJson());
         try {
             response.getWriter().write(checkJsonp(request, response, result.toString()));
         } catch (Exception e) {
@@ -178,6 +179,21 @@ public class BaseController {
             return sb.toString();
         }
         return data;
+    }
+
+    public JSONObject receiveJson(HttpServletRequest request) throws Exception {
+
+        try (InputStream inputStream = request.getInputStream()) {
+            request.setCharacterEncoding("utf-8");
+            byte[] bytes = new byte[request.getContentLength()];
+            inputStream.read(bytes);
+            String param = new String(bytes, "UTF-8");
+            JSONObject jsonObj = JSONObject.fromObject(param);
+            inputStream.close();
+            return jsonObj;
+        } catch (Exception e) {
+            throw new Exception();
+        }
     }
 
 

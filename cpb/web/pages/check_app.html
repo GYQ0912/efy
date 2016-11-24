@@ -31,18 +31,12 @@
         }
     })();
 
-    var localUrl='cundong://splash';
     var openIframe=createIframe();
-
-    if(window.navigator.userAgent.indexOf("Chrome") !== -1 ) {
-        window.location.href = localUrl;
-    } else {
-        openIframe.src = localUrl;
-    }
+    openIframe.src = 'cundong://splash';
 
     setTimeout(function () {
-        window.location.href = "download_app.html";
-    }, 100);
+        window.location.href = 'download_app.html';
+    }, 500);
 
 </script>
 </html>

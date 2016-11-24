@@ -5,12 +5,12 @@ import java.util.Date;
 public class LabelBatch extends Entity {
 
     private String id;
-    private String setting;
-    private String serial;
-    private Integer amount;
+    private String setting;//标签批次
+    private String serial;//批次序号
+    private Integer amount;//标签数量
     private Date createDate;
-    private String status;
-    private String type;
+    private String status;//1.待生成  2.已生成
+    private String type; //1.二维码  2.NFC标签
 
     public String getId() {
         return id;

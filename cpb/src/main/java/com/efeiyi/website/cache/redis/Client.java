@@ -1,5 +1,6 @@
 package com.efeiyi.website.cache.redis;
 
+import com.efeiyi.website.entity.User;
 import com.efeiyi.website.util.Util;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
@@ -16,10 +17,10 @@ import java.util.concurrent.Executors;
 public class Client {
 
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
-            Redis redis = RedisFactory.getInstance().getRedis();
-            System.out.println(redis.get("foo"));
+            /*Redis redis = RedisFactory.getInstance().getRedis();
+            System.out.println(redis.get("foo"));*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,6 +123,6 @@ public class Client {
             System.out.print(" ; ");
         }
         System.out.println("]");
-    }*/
+    }
 
 }

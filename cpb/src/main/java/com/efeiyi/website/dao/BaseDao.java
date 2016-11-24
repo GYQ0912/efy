@@ -24,7 +24,6 @@ public abstract class BaseDao<T extends Entity> implements Dao<T> {
         DATABASE_ONLY, REDIS_ONLY, DATABASE_AND_REDIS, DATABASE_PRIORITY, REDIS_PRIORITY
     }
 
-
     public BaseDao() {
 
     }
