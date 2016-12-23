@@ -28,7 +28,7 @@
     </servlet-mapping>
     
     <welcome-file-list>
-        <welcome-file>/pages/download_app.html</welcome-file>
+        <welcome-file>/pages/check_app.html</welcome-file>
     </welcome-file-list>
 
 
