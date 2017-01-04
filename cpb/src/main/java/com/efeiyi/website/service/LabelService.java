@@ -38,13 +38,13 @@ public class LabelService extends BaseService<Label> implements ILabelService {
     @Override
     public void getLabelList(List<Label> labelList, String labelBatchId) throws Exception {
         LabelDao labelDao = new LabelDao();
-        labelDao.getLabelList(labelList, labelBatchId, "3");
+        labelDao.getLabelList(labelList, labelBatchId, "2");
     }
 
     @Override
     public void updateLabel(String labelId, String code, Connection conn) throws Exception {
         LabelDao labelDao = new LabelDao();
-        labelDao.updateCodeById(labelId, code, conn);
+        labelDao.updateCodeById(labelId, code, "3", conn);
     }
 
     @Override

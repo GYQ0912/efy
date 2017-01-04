@@ -31,8 +31,9 @@
         }
     })();
 
+    var date = new Date();
     var openIframe=createIframe();
-    openIframe.src = 'cundong://splash';
+    openIframe.src = 'cundong://splash?r=' + date.getTime();
 
     setTimeout(function () {
         window.location.href = '/pages/download_app.html';

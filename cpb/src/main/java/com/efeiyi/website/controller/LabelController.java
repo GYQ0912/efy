@@ -7,6 +7,7 @@ import com.efeiyi.website.service.Session;
 import com.efeiyi.website.service.inter.ILabelService;
 import com.efeiyi.website.service.inter.IProductService;
 import com.efeiyi.website.util.ApplicationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,24 +131,11 @@ public class LabelController extends BaseController {
             return;
         }
 
-        HttpSession session = request.getSession();
-        Label usableLabel = null;
-        for(Label label : labelList) {
-            Object obj = session.getAttribute(label.getId() + "_occupied");
-            if(obj != null) {
-                continue;
-            }
-            session.setAttribute(label.getId() + "_occupied", label);
-            usableLabel = label;
-            break;
-        }
-
-        if(usableLabel == null) {
+        if(labelList.size() == 0) {
             responseEmpty(request, response);
-            return;
+        } else {
+            responseContent(request, response, labelList.get(0));
         }
-
-        responseContent(request, response, usableLabel);
     }
 
     @RequestMapping("writeCode")
@@ -181,7 +169,7 @@ public class LabelController extends BaseController {
             return;
         }
 
-        if(label != null) {
+        if(label != null && label.getId() != null) {
             ConnectionPool.get().free(conn);
             responseException(request, response, ApplicationException.WROTE_CODE_ERROR);
             return;
@@ -189,6 +177,10 @@ public class LabelController extends BaseController {
 
         try {
             labelService.updateLabel(labelId, code, conn);
+        } catch (MySQLIntegrityConstraintViolationException e) {
+            ConnectionPool.get().free(conn);
+            responseException(request, response, ApplicationException.WROTE_CODE_ERROR);
+            return;
         } catch (Exception e) {
             ConnectionPool.get().free(conn);
             responseException(request, response, ApplicationException.INNER_ERROR);

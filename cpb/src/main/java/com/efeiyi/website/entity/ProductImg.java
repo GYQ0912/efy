@@ -1,5 +1,8 @@
 package com.efeiyi.website.entity;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 public class ProductImg extends Entity {
 
     private String id;

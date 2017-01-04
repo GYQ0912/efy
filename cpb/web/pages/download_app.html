@@ -47,8 +47,9 @@
         if(isWeixin()) {
             initTipWin();
         } else {
+            var date = new Date();
             var openIframe=createIframe();
-            openIframe.src = 'cundong://splash';
+            openIframe.src = 'cundong://splash?r=' + date.getTime();
         }
     });
 

@@ -38,8 +38,8 @@ public class LabelDao extends BaseDao<Label>{
         super.get("get_label_by_batch_id", new Object[]{ labelBatchId, status}, labelList);
     }
 
-    public void updateCodeById(String labelId, String code, Connection conn) throws Exception {
-        super.execute("update_code_of_label_by_id", new Object[]{labelId, code}, conn);
+    public void updateCodeById(String labelId, String code, String status, Connection conn) throws Exception {
+        super.execute("update_code_of_label_by_id", new Object[]{labelId, code, status}, conn);
     }
 
     public Label getLabelByIdAndCode(String labelId, String code, Connection conn) throws Exception {

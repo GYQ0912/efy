@@ -1,10 +1,13 @@
 package com.efeiyi.website.service;
 
 import com.efeiyi.website.dao.LabelBatchDao;
+import com.efeiyi.website.dao.LabelDao;
+import com.efeiyi.website.entity.Label;
 import com.efeiyi.website.entity.LabelBatch;
 import com.efeiyi.website.service.inter.ILabelBatchService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
