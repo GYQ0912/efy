@@ -20,5 +20,7 @@ public interface ILabelService {
 
     void updateLabel(String labelId, String code, Connection conn) throws Exception;
 
+    void updateLabel(Label label) throws Exception;
+
     Label getLabelByIdAndCode(String labelId, String code, Connection conn) throws Exception;
 }

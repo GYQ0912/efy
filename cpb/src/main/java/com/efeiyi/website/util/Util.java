@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.converters.ShortConverter;
@@ -341,6 +342,12 @@ public class Util {
         } else {
             return obj.toString();
         }
+    }
+
+    public static void main(String[] args) {
+        String s = UUIDGenerator.generateCouponCode();
+        s = s.toUpperCase();
+        System.out.print(s);
     }
 
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>优惠券</title>
+<script type="application/javascript" src="../scripts/js/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+
+<div>
+    <table id="display_coupon" class="display-coupon">
+        <tr id="tr_1"><td id="td_1"><label></label><i></i></td></tr>
+    </table>
+</div>
+
+<div>
+    <input type="text" placeholder="请输入姓名" id="name"/>
+    <input type="button" value="添加" id="add"/>
+</div>
+
+
+</body>
+<script>
+    $(function () {
+        $('#add').on('click', function() {
+            var name = $('#name').val().trim();
+            if(name == '') {
+                alert('请输入姓名');
+                return;
+            }
+
+            generateTable(name);
+
+            $('#name').val('');
+        });
+    });
+
+    function generateTable(name) {
+        var last_tr = $('#display_coupon').find("tr")[$("#display_coupon").find("tr").length-1];
+
+        var $td_arr = $(last_tr).find('td');
+
+        $('#td_1 label').text(name);
+    }
+</script>
+</html>

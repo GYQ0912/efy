@@ -13,8 +13,10 @@ public class ApplicationException extends Exception {
 	public static int INVALID_CODE_ERROR = 0x02;
 	public static int WROTE_CODE_ERROR = 0x03;
 	public static int WROTE_CODE_OCCUPIED = 0x04;
+	public static int PARAM_ERROR = 0x05;
+	public static int SQL_ERROR = 0x06;
 
-	private static final String[] ERROR_DESC_LIST = new String[] { "", "内部错误.", "防伪码无效", "标签已存在", "其他设备正在操作此标签"};
+	private static final String[] ERROR_DESC_LIST = new String[] { "", "内部错误.", "防伪码无效", "标签已存在", "其他设备正在操作此标签", "参数错误", "数据库错误"};
 
 	private int code;
 	private String description;

@@ -54,4 +54,10 @@ public class LabelService extends BaseService<Label> implements ILabelService {
         return label;
     }
 
+    @Override
+    public void updateLabel(Label label) throws Exception {
+        LabelDao labelDao = new LabelDao();
+        labelDao.update(label);
+    }
+
 }

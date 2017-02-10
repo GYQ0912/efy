@@ -106,6 +106,8 @@ public class LabelController extends BaseController {
             return;
         }
 
+        product.setSerial(label.getSerial() + "");
+
         ConnectionPool.get().free(conn);
         responseSuccess(request, response, product);
     }
@@ -118,7 +120,7 @@ public class LabelController extends BaseController {
         try {
             jsonObject = receiveJson(request);
         } catch (Exception e) {
-            responseException(request, response, ApplicationException.INNER_ERROR);
+            responseException(request, response, ApplicationException.PARAM_ERROR);
             return;
         }
 
@@ -142,25 +144,25 @@ public class LabelController extends BaseController {
     public void writeCode(HttpServletRequest request, HttpServletResponse response) {
         Connection conn = null;
         JSONObject jsonObject = null;
+        Label label = null;
 
         try {
             jsonObject = receiveJson(request);
         } catch (Exception e) {
-            responseException(request, response, ApplicationException.INNER_ERROR);
+            responseException(request, response, ApplicationException.PARAM_ERROR);
             return;
         }
 
         try {
             conn = ConnectionPool.get().getConnection();
         } catch (Exception e) {
-            responseException(request, response, ApplicationException.INNER_ERROR);
+            responseException(request, response, ApplicationException.SQL_ERROR);
             return;
         }
 
         String labelId = jsonObject.getString("labelId");
         String code = jsonObject.getString("code");
 
-        Label label = null;
         try {
             label = labelService.getLabelByIdAndCode(labelId, code, conn);
         } catch (Exception e) {
@@ -178,16 +180,17 @@ public class LabelController extends BaseController {
         try {
             labelService.updateLabel(labelId, code, conn);
         } catch (MySQLIntegrityConstraintViolationException e) {
-            ConnectionPool.get().free(conn);
             responseException(request, response, ApplicationException.WROTE_CODE_ERROR);
             return;
         } catch (Exception e) {
-            ConnectionPool.get().free(conn);
             responseException(request, response, ApplicationException.INNER_ERROR);
             return;
+        } finally {
+            ConnectionPool.get().free(conn);
         }
 
         ConnectionPool.get().free(conn);
         responseSuccess(request, response);
     }
+
 }
