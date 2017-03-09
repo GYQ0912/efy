@@ -1,0 +1,238 @@
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    max-width: 640px;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", Arial, Helvetica, STHeiti, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+    margin: 0 auto;
+    background: #f0f0f0;
+}
+
+ul, ol, dl, h1, h2, h3, h4, p {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+ul, dl {
+    list-style: none;
+}
+
+/*--//End reset--*/
+.angle_left:after {
+    content: '';
+    width: 13px;
+    height: 13px;
+    border-top: 1px solid #999;
+    border-left: 1px solid #999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -6px;
+    margin-left: -6px;
+    transform: rotate(-45deg);
+}
+
+.angle_right:after {
+    content: '';
+    width: 13px;
+    height: 13px;
+    border-top: 1px solid #999;
+    border-left: 1px solid #999;
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    margin-top: -6px;
+    transform: rotate(-225deg);
+}
+
+article {
+    padding-top:45px;
+}
+
+header {
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    background: #fff;
+}
+
+header h1 {
+    font-size: 16px;
+    line-height: 45px;
+}
+
+header .angle_left {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+header .buy {
+    height: 14px;
+    line-height: 14px;
+    color: #ee7700;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    margin-top: -7px;
+}
+
+/*--//End header */
+
+.res_tips {
+    background: url(../images/res_tips_bg.png) 0 0 no-repeat;
+    line-height: 77px;
+    text-align: center;
+}
+
+.res_tips h2 {
+    font-size: 18px;
+    color: #ee7700;;
+}
+
+.panel_base {
+    background: #fff;
+    padding: 24px 20px;
+    margin-bottom: 10px;
+}
+
+.panel_base .img {
+    font-size: 0;
+    margin-bottom: 15px;
+}
+
+.panel_base .name {
+    font-size: 18px;
+    line-height: 33px;
+}
+
+.panel_base .title {
+    font-size: 16px;
+    line-height: 33px;
+}
+
+.panel_base .info .text {
+    min-height: 27px;
+    padding-left: 74px;
+    font-size: 14px;
+    color: #666;
+    position: relative;
+}
+
+.panel_base .info .text strong {
+    line-height: 27px;
+    font-weight: normal;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.panel_base .info .text span {
+    line-height: 20px;
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.panel_links {
+    line-height: 49px;
+    background: #fff;
+}
+
+.panel_links ul {
+    padding: 0 20px;
+}
+
+.panel_links li {
+    border-bottom: 1px solid #e6e6e6;
+    position: relative;
+}
+
+.panel_links li a {
+    font-size: 15px;
+    display: block;
+}
+
+.panel_links li:last-child {
+    border-bottom: 0;
+}
+
+.result_no {
+    background: #fff;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.result_no .info {
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: -30px;
+}
+
+.result_no .info li {
+    font-size: 18px;
+    color: #666;
+    line-height: 30px;
+}
+
+
+
+.auth {
+    padding: 0 20px;
+    position: absolute;
+    bottom:24px;
+    left:0;
+}
+.auth span{
+    font-size:11px;
+    line-height:15px;
+    color: #999;
+    float: left;
+    margin-right:10px;
+}
+.auth .united,
+.auth .efeiyi {
+    background: url(../images/icon.png) no-repeat;
+    -webkit-background-size:20px auto;
+    background-size:20px auto;
+    width:20px;
+    height:15px;
+    float: left;
+    margin-left: 8px;
+}
+
+.auth .efeiyi {
+    background-position: 0 -15px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>诚品宝—溯源信息</title>
+    <link rel="stylesheet" href="../assets/css/layouts.css">
+</head>
+<body style="background:#fff;">
+<header>
+    <a class="angle_left" href="javascript:history.go(-1);"></a>
+    <h1>溯源信息</h1>
+    <a class="buy" href="#" target="_blank" id="shopping_url">购买</a>
+</header>
+<!--//End header -->
+
+<article>
+    <div class="panel">
+        <div class="panel_base">
+            <div class="img"><img src="../assets/uploads/pro1.jpg" alt="" id="product_img"></div>
+            <div class="name" id="product_name">苏绣—颜伯龙花鸟小品</div>
+            <div class="info">
+                <p class="text"><strong>创作地区：</strong><span id="region">江苏苏州</span></p>
+                <p class="text"><strong>创作工艺：</strong><span id="craft">苏绣技艺的制作主要有预备阶段、选择底料、制作底稿、绣花线、绑线连绑线、刺绣六个过程。</span></p>
+                <p class="text"><strong>参&nbsp;与&nbsp;人：</strong><span id="master_name">姚惠芬</span></p>
+            </div>
+        </div>
+    </div>
+
+</article>
+
+</body>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script>
+
+function buildView() {
+    if(product.shoppingUrl != null && product.shoppingUrl != '') {
+        $('#shopping_url').attr('href', product.shoppingUrl);
+    }
+
+    if(typeof product.tenant.tenantProductSeriesList != 'undefined' &&
+            typeof product.tenant.tenantProductSeriesList[0].imgList != 'undefined' &&
+            typeof product.tenant.tenantProductSeriesList[0].imgList[0].imgUrl != 'undefined') {
+        $('#product_img').attr('src', 'http://master3.efeiyi.com/' + product.tenant.tenantProductSeriesList[0].imgList[0].imgUrl);
+    }
+
+    $('#product_name').text(product.name);
+
+    if(typeof product.tenant.tenantProductSeriesList != 'undefined' &&
+            typeof product.tenant.tenantProductSeriesList[0].region != 'undefined') {
+        $('#region').text(product.tenant.tenantProductSeriesList[0].region);
+    }
+
+    if(typeof product.tenant.tenantProductSeriesList != 'undefined' &&
+            typeof product.tenant.tenantProductSeriesList[0].craft != 'undefined') {
+        $('#craft').text(product.tenant.tenantProductSeriesList[0].craft);
+    }
+
+    $('#master_name').text(product.masterName);
+
+}
+
+</script>
+</html>

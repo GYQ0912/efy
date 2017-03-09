@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>test</title>
+    </head>
+<body>
+    <div id="result" onclick="APPCommon.openApp()">点我</div>
+    <script>
+
+        var APPCommon = {
+            iphoneSchema: 'http://www.sina.com.cn',
+            iphoneDownUrl: 'https://itunes.apple.com/cn/app/xing-botv-mei-nu-shuai-ge3d/id1098066581?l=en&mt=8',
+            androidSchema: 'intent://splash/#Intent;scheme=cundong;package=com.cheng315.nfc;category=android.intent.category.DEFAULT;action=android.intent.action.VIEW;S.browser_fallback_url=http%3A%2F%2Fm.315cheng.com%2Fpages%2Fdownload_app.html;end',
+            androidDownUrl: 'http://webrs.xingbo.tv/app/XingboLive-release.apk',
+            openApp: function(){
+                var this_  =  this;
+                //微信
+                if(this_.isWeixin()){
+                    $(".weixin-tip").css("height",$(window).height());
+                    $(".weixin-tip").show();
+                    $('.weixin-tip').on('touchstart', function () {
+                        $(".weixin-tip").hide();
+                    });
+``
+                }else{//非微信浏览器
+                    if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+                        var loadDateTime = new Date();
+                        window.setTimeout(function() {
+                            var timeOutDateTime = new Date();
+                            if (timeOutDateTime - loadDateTime < 5000) {
+                                window.location = this_.iphoneDownUrl;//ios下载地址
+                            } else {
+                                window.close();
+                            }
+                        },25);
+                        window.location = this.iphoneSchema;
+                    }else if (navigator.userAgent.match(/android/i)) {
+                        try {
+                            window.location = this_.androidSchema;
+                            setTimeout(function(){
+                                window.location=this_.androidDownUrl; //android下载地址
+
+                            },5000);
+                        } catch(e) {}
+                    }
+                }
+            },
+            isWeixin: function(){ //判断是否是微信
+                var ua = navigator.userAgent.toLowerCase();
+                if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        };
+
+
+
+    </script>
+</body>
+
+</html>

@@ -46,10 +46,6 @@
 
         if(isWeixin()) {
             initTipWin();
-        } else {
-            var date = new Date();
-            var openIframe=createIframe();
-            openIframe.src = 'cundong://splash?r=' + date.getTime();
         }
     });
 
@@ -61,7 +57,7 @@
             return false;
         }
     }
-    
+
     function initTipWin() {
         var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
         var weixinTip = $('<div id="weixinTip"><p><img src="/images/live_weixin.png" alt="微信打开" style="width: 347px"/></p></div>');
@@ -82,18 +78,6 @@
             "padding-left":"5%",
             "padding-right":"5%"
         });
-    }
-
-    function createIframe() {
-        var iframe;
-        if(iframe){
-            return iframe;
-        }else{
-            iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-            return iframe;
-        }
     }
 
 </script>

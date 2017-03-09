@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>诚品宝—作品信息</title>
+    <link rel="stylesheet" href="../assets/css/layouts.css">
+</head>
+<body style="background:#fff;">
+<header>
+    <a class="angle_left" href="javascript:history.go(-1)"></a>
+    <h1>作品信息</h1>
+    <a href="#" class="buy" target="_blank" id="shopping_url">购买</a>
+</header>
+<!--//End header -->
+
+<article>
+
+    <div class="panel">
+        <div class="panel_base">
+            <div class="img"><img src="../assets/uploads/pro1.jpg" alt="" id="product_img"></div>
+            <div class="info">
+                <p class="text"><strong>商品名称：</strong><span id="product_name">苏绣—颜伯龙花鸟小品</span></p>
+                <p class="text"><strong>创&nbsp;作&nbsp;者&nbsp;：</strong><span id="master_name">姚惠芬</span></p>
+                <p class="text"><strong>创作时间：</strong><span id="made_year">2015年6月</span></p>
+            </div>
+        </div>
+        <!--//End-->
+    </div>
+    <!--//End panel -->
+
+</article>
+
+
+</body>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script>
+function buildView() {
+    if(product.shoppingUrl != null && product.shoppingUrl != '') {
+        $('#shopping_url').attr('href', product.shoppingUrl);
+    }
+
+    $('#product_img').attr('src', 'http://master3.efeiyi.com/' + product.logo);
+    $('#product_name').text(product.name);
+    $('#master_name').text(product.masterName);
+
+    var date = new Date();
+    date.setTime(product.madeYear);
+    $('#made_year').text(date.format("yyyy年MM月dd日"));
+}
+
+</script>
+</html>

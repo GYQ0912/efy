@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>诚品宝—结果显示页面</title>
+    <link rel="stylesheet" href="../assets/css/layouts.css">
+</head>
+<body>
+<header>
+    <a class="angle_left" href="javascript:history.go(-1);"></a>
+    <h1>认证结果</h1>
+</header>
+<!--//End header -->
+
+<article>
+    <div class="res_tips">
+        <h2>恭喜您，查询的作品为正品！</h2>
+    </div>
+    <!--//End res_tips -->
+
+    <div class="panel">
+        <div class="panel_base">
+            <div class="img"><img src="../assets/uploads/pro1.jpg" alt="" id="product_img"></div>
+            <div class="name" id="product_name">苏绣—颜伯龙花鸟小品</div>
+            <div class="info">
+                <p class="text"><strong>非遗项目：</strong><span id="series_name">国家级苏绣技艺</span></p>
+                <p class="text"><strong>商户名称：</strong><span id="tenant_name">苏州市姚惠芬苏绣工作室</span></p>
+                <p class="text"><strong>创作时间：</strong><span id="made_year">2015年6月</span></p>
+            </div>
+        </div>
+        <!--//End-->
+        <div class="panel_base">
+            <div class="title">作品认证信息</div>
+            <div class="info">
+                <p class="text"><strong>商品编码：</strong><span id="product_serial">1234567890</span></p>
+                <p class="text"><strong>认证证书：</strong><span id="certi">国家级非物质文化遗产项目</span></p>
+                <p class="text"><strong>认证机构：</strong><span id="org">文化部非遗司</span></p>
+                <p class="text"><strong>认证时间：</strong><span id="certi_date">2015年6月</span></p>
+                <p class="text"><strong>认证结果：</strong><span>国家级非遗名录项目</span></p>
+            </div>
+        </div>
+        <!--//End-->
+        <div class="panel_links">
+            <ul>
+                <li><a class="angle_right" href="#" id="product_url">作品信息</a></li>
+                <li><a class="angle_right" href="#" id="origin_url">溯源信息</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--//End panel -->
+</article>
+</body>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script>
+
+function buildView() {
+    $('#product_img').attr('src', 'http://master3.efeiyi.com/' + product.logo);
+    $('#product_name').text(product.name);
+    $('#series_name').text(product.productSeries.name);
+    $('#tenant_name').text(product.tenant.name);
+    var date = new Date();
+    date.setTime(product.madeYear);
+    $('#made_year').text(date.format("yyyy年MM月dd日"));
+
+    $('#product_serial').text(product.serial);
+
+    if(typeof product.tenant.tenantCertificationList != 'undefined' &&
+            typeof product.tenant.tenantCertificationList[0].name != 'undefined') {
+        $('#certi').text(product.tenant.tenantCertificationList[0].name);
+    }
+    if(typeof product.tenant.tenantCertificationList != 'undefined' &&
+            typeof product.tenant.tenantCertificationList[0].org != 'undefined') {
+        $('#org').text(product.tenant.tenantCertificationList[0].org);
+    }
+    if(typeof product.tenant.tenantCertificationList != 'undefined' &&
+            typeof product.tenant.tenantCertificationList[0].theDate != 'undefined') {
+        date.setTime(product.tenant.tenantCertificationList[0].theDate);
+        $('#certi_date').text(date.format("yyyy年MM月dd日"));
+    }
+
+    $('#product_url').attr('href', '/pages/result_production.html?code=' + code);
+    $('#origin_url').attr('href', '/pages/result_origin.html?code=' + code);
+}
+
+</script>
+</html>

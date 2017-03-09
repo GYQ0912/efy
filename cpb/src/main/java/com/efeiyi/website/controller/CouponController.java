@@ -31,13 +31,13 @@ public class CouponController extends BaseController {
     @RequestMapping("getCoupon")
     public void getCoupon(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Connection conn = ConnectionPool.get().getConnection();
-        int num = 417;
+        int num = 398;
 
         conn.setAutoCommit(false);
         try {
 
             for(int i = 0; i < num; i ++) {
-                String s = getRandomString(20);
+                String s = getRandomString(18);
 
                 Coupon coupon = new Coupon();
                 coupon.setCode(s);
@@ -65,10 +65,10 @@ public class CouponController extends BaseController {
         Graphics g11 = image.getGraphics();
         // 设置颜色
         g11.setColor(Color.BLACK);
-        Font font11 = new Font("微软雅黑", Font.PLAIN, 22);
+        Font font11 = new Font("微软雅黑", Font.PLAIN, 20);
         g11.setFont(font11);
         // 输出文字
-        g11.drawString(text, 270, 917 + font11.getSize());
+        g11.drawString(text, 217, 731 + font11.getSize());
         // 输出数据流
 
         File imageFile = new File("d:\\coupon\\" + text + ".jpg");
@@ -85,7 +85,7 @@ public class CouponController extends BaseController {
     }
 
     public static String getRandomString(int length) { //length表示生成字符串的长度
-        String base = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        String base = "ABCDEFGHJKLNPQRSTUVXYZ23456789";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {
@@ -96,9 +96,7 @@ public class CouponController extends BaseController {
     }
 
     public static void main(String[] args) throws Exception {
-        //generateCoupon(5);
-        String s = getRandomString(20);
-        System.out.print(s);
+
     }
 
 }
