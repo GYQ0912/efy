@@ -1,0 +1,130 @@
+<!--  -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>支付宝</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=0.5,minimum-scale=0.5,user-scalable=no">
+    <script>
+        !function(e) {
+            function t(n) {
+                if (i[n]) return i[n].exports;
+                var r = i[n] = {
+                    exports: {},
+                    id: n,
+                    loaded: !1
+                };
+                return e[n].call(r.exports, r, r.exports, t), r.loaded = !0, r.exports
+            }
+            var i = {};
+            return t.m = e, t.c = i, t.p = "", t(0)
+        }([function(e, t) {
+            "use strict";
+            Object.defineProperty(t, "__esModule", {
+                value: !0
+            });
+            var i = window;
+            t["default"] = i.vl = function(e, t) {
+                var n = e || 100,
+                        r = t || 750,
+                        a = i.document,
+                        d = navigator.userAgent,
+                        o = d.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),
+                        l = d.match(/U3\/((\d+|\.){5,})/i),
+                        s = l && parseInt(l[1].split(".").join(""), 10) >= 80,
+                        u = a.documentElement,
+                        c = 1;
+                if (o && o[1] > 534 || s) {
+                    u.style.fontSize = n + "px";
+                    var p = a.createElement("div");
+                    p.setAttribute("style", "width: 1rem;display:none"), u.appendChild(p);
+                    var m = i.getComputedStyle(p).width;
+                    if (u.removeChild(p), m !== u.style.fontSize) {
+                        var v = parseInt(m, 10);
+                        c = 100 / v
+                    }
+                }
+                var f = a.querySelector('meta[name="viewport"]');
+                f || (f = a.createElement("meta"), f.setAttribute("name", "viewport"), a.head.appendChild(f)), f.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1");
+                var h = function() {
+                    u.style.fontSize = n / r * u.clientWidth * c + "px"
+                };
+                h(), i.addEventListener("resize", h)
+            }, e.exports = t["default"]
+        }]);
+        vl(100, 750);
+    </script>
+    <style>
+        *,:after,:before{-webkit-tap-highlight-color:rgba(0,0,0,0)}
+        *{padding:0;margin:0;box-sizing:border-box}:focus{outline:none}
+        body,html{min-height:100%}
+        body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:#f5f5f9}
+        a,img{-webkit-touch-callout:none}
+        body,button,input,select,textarea{font-size:.16rem;line-height:1.2;color:#333;font-family:Helvetica Neue,Helvetica,STHeiTi,sans-serif}
+        input{line-height:normal}
+        a,a:hover{text-decoration:none;color:#0ae}
+        li,ul{list-style:none}
+        body{background:#019fe8 url(/images/index.png) no-repeat top;background-size:100%;text-align:center}
+        .actions{position:absolute;left:0;right:0;top:8.5rem;margin:auto;width:70%;}
+        .actions a{
+            height:1.05rem;
+            line-height:1.05rem;
+            color:#1b99dc;
+            background:#fff;
+            font-size:.44rem;
+            font-weight:bold;
+            letter-spacing:.041667rem;
+            border:1px solid transparent;
+            border-radius:.1rem;
+            display: block;
+            margin-bottom: .4rem;
+        }
+    </style>
+</head>
+<body>
+<div class="actions">
+    <a class="open">打开支付宝</a>
+    <a class="download">下载支付宝</a>
+</div>
+<script src="/js/callapp.js"></script>
+<script>
+    function getAllParams(url) {
+        var reg = /[(\?|\&)]([^=]+)\=([^&#]+)/g, matches, output = {};
+        while (matches = reg.exec(url)) {
+            var key = decodeURIComponent(matches[1]), value = decodeURIComponent(matches[2]);
+            output[key] = value;
+        }
+        return output;
+    }
+
+    var params = getAllParams(location.href);
+    var scheme = 'cundong://splash';
+    if (params.scheme) {
+        scheme = params.scheme;
+    }
+
+    if (!params.nojump) {
+        callapp.gotoPage(scheme, 'com.cheng315.nfc');
+    }
+
+    document.querySelector('.open').addEventListener('click', function() {
+        callapp.gotoPage(scheme, 'com.cheng315.nfc');
+    });
+
+    document.querySelector('.download').addEventListener('click', function() {
+        var ua = window.navigator.userAgent;
+        if (ua.match(/Android[\s\/]([\d\.]+)/)) {
+            location.href = 'https://t.alipayobjects.com/L1/71/100/and/alipay_wap_dc.apk';
+        } else if (ua.match(/(iPhone|iPad|iPod)/)) {
+            location.href = 'itms-apps://itunes.apple.com/app/zhi-fu-bao/id333206289?mt=8';
+        }
+    });
+</script>
+</body>
+</html>
+
+

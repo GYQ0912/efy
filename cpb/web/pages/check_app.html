@@ -1,115 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <meta charset="UTF-8">
     <title>诚品宝</title>
-    <link href="../css/check_app.css" rel="stylesheet">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" type="image/png" href="http://www.315cheng.com/images/pal_icon.png;">
+    <link rel="stylesheet" href="../css/layout.css">
+    <script language="JavaScript" src="../scripts/js/jquery-3.1.0.min.js"></script>
+    <script>
+        !function(e) {
+            function t(n) {
+                if (i[n]) return i[n].exports;
+                var r = i[n] = {
+                    exports: {},
+                    id: n,
+                    loaded: !1
+                };
+                return e[n].call(r.exports, r, r.exports, t), r.loaded = !0, r.exports
+            }
+            var i = {};
+            return t.m = e, t.c = i, t.p = "", t(0)
+        }([function(e, t) {
+            "use strict";
+            Object.defineProperty(t, "__esModule", {
+                value: !0
+            });
+            var i = window;
+            t["default"] = i.vl = function(e, t) {
+                var n = e || 100,
+                        r = t || 750,
+                        a = i.document,
+                        d = navigator.userAgent,
+                        o = d.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),
+                        l = d.match(/U3\/((\d+|\.){5,})/i),
+                        s = l && parseInt(l[1].split(".").join(""), 10) >= 80,
+                        u = a.documentElement,
+                        c = 1;
+                if (o && o[1] > 534 || s) {
+                    u.style.fontSize = n + "px";
+                    var p = a.createElement("div");
+                    p.setAttribute("style", "width: 1rem;display:none"), u.appendChild(p);
+                    var m = i.getComputedStyle(p).width;
+                    if (u.removeChild(p), m !== u.style.fontSize) {
+                        var v = parseInt(m, 10);
+                        c = 100 / v
+                    }
+                }
+                var f = a.querySelector('meta[name="viewport"]');
+                f || (f = a.createElement("meta"), f.setAttribute("name", "viewport"), a.head.appendChild(f)), f.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1");
+                var h = function() {
+                    u.style.fontSize = n / r * u.clientWidth * c + "px"
+                };
+                h(), i.addEventListener("resize", h)
+            }, e.exports = t["default"]
+        }]);
+        vl(100, 750);
+    </script>
 </head>
 <body>
-<div class="circle">
-    <a id="go" class="blink" href="#" style="display: none;">点击屏幕继续</a>
-</div>
+<article class="content">
+    <header>
+        <h1>查询商品真伪信息</h1>
+        <h2>请下载使用诚品宝APP</h2>
+    </header>
+    <div class="btns">
+        <!--<a href="http://m.315cheng.com/resource/315cheng.apk"><i class="download"></i>点击下载</a>-->
+        <a class="open">打开诚品宝</a>
+        <a href="http://m.315cheng.com/resource/315cheng.apk" style="margin-top: 20px;">下载诚品宝</a>
+    </div>
+    <footer>
+        <div class="icons"></div>
+        <div class="text">
+            <p>诚品宝—非遗商品防伪溯源系统</p>
+            <p>联合国教科文组织全球唯一合作伙伴</p>
+            <p>永新华韵出品</p>
+        </div>
+        <div class="partner">
+            <a href="http://en.unesco.org/" title="联合国教科文组织"><i class="icon_lianhe"></i>联合国教科文组织</a>
+            <a href="http://mall.efeiyi.com" title="非遗互联网平台"><i class="icon_feiyi"></i>非遗互联网平台</a>
+        </div>
+    </footer>
+</article>
 </body>
-<script language="JavaScript" src="../scripts/js/jquery-3.1.0.min.js"></script>
-<script>
-var APPCommon = {
-    u : navigator.userAgent,
-    androidIntent: 'intent://splash/#Intent;scheme=cundong;package=com.cheng315.nfc;category=android.intent.category.DEFAULT;' +
-        'action=android.intent.action.VIEW;S.browser_fallback_url=http%3A%2F%2Fm.315cheng.com%2Fpages%2Fdownload_app.html;end',
-    downAppUrl: '/pages/download_app.html',
-    openApp : function() {
-        var _this = this;
-        //微信或非android设备
-        if(this.isWeixin() || _this.u.indexOf('Android') < 0) {
-            window.location = this.downAppUrl;
+<script src="/js/callapp.js"></script>
+<script type="text/javascript">
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+    $(function () {
+        if(!isAndroid) {
+            //$('.btns').children('i').remove();
+            $('.open').hide();
+            $('.btns').find('a').text('仅支持Android设备下载使用');
+            $('.btns').find('a').addClass('no-download');
             return;
         }
 
-        /*1.先判断uc 360
-         2.判断chrome
-         3.判断非chrome*/
-
-        if(_this.u.indexOf("UCBrowser") >= 0 || _this.u.indexOf("360") >= 0
-                || _this.u.indexOf("QQ") >= 0 || _this.u.indexOf("Chrome") < 0) {
-             var iframe = _this.createIframe();
-             iframe.src = 'cundong://splash';
-        } else if(_this.u.indexOf("Chrome") >= 0 && _this.u.indexOf("Safari") >= 0) {
-            $('#go').show();
-            $('#go').attr('href', _this.androidIntent);
-            $('.circle').css('height', window.screen.availHeight);
-            $('.circle').on('click', function () {
-                window.location.href = _this.androidIntent;
-            });
+        if(isWeixin()) {
+            initTipWin();
             return;
         }
 
-        setTimeout(function () {
-            window.location = _this.downAppUrl;
-        }, 500);
+        var params = getAllParams(location.href);
+        var scheme = 'cundong://splash';
+        if (params.scheme) {
+            scheme = params.scheme;
+        }
 
-    },
-    isWeixin: function(){ //判断是否是微信
-        var ua = this.u.toLowerCase();
+        if (!params.nojump) {
+            callapp.gotoPage(scheme, 'com.cheng315.nfc');
+        }
+
+        document.querySelector('.open').addEventListener('click', function() {
+            callapp.gotoPage(scheme, 'com.cheng315.nfc');
+        });
+    });
+
+    function getAllParams(url) {
+        var reg = /[(\?|\&)]([^=]+)\=([^&#]+)/g, matches, output = {};
+        while (matches = reg.exec(url)) {
+            var key = decodeURIComponent(matches[1]), value = decodeURIComponent(matches[2]);
+            output[key] = value;
+        }
+        return output;
+    }
+
+    function isWeixin() {
+        var ua = navigator.userAgent.toLowerCase();
         if (ua.match(/MicroMessenger/i) == "micromessenger") {
             return true;
         } else {
             return false;
         }
-    },
-    createIframe : function() {
-        var iframe;
-        return function(){
-            if(iframe){
-                return iframe;
-            }else{
-                iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
-                return iframe;
-            }
-        }
     }
-};
 
-$(function () {
-    APPCommon.openApp();
-});
-
-function check() {
-    //判断 浏览器 类型
-    var ex = navigator.userAgent,
-            bUA;
-    if (ex.indexOf("MSIE") >= 0) {
-        bUA = "Internet Explorer 10  Or Earlier"; //IE
-    } else if (ex.indexOf("Firefox") >= 0) {
-        bUA = "Firefox";
-    } else if (ex.indexOf("Chrome") >= 0) {
-        bUA = "Chrome";
-        if (ex.indexOf("360SE") >= 0) { //360安全浏览器
-            bUA = "360SE";
-        } else if (ex.indexOf("360EE") >= 0) { //360急速浏览器
-            bUA = "360EE";
-        } else if (ex.indexOf("SE") >= 0 && ex.indexOf("360SE") == -1) { //搜狗浏览器
-            bUA = "SouGou";
-        } else if (ex.indexOf("Maxthon") >= 0) { //遨游浏览器
-            bUA = "Maxthon";
-        }
-    } else if (ex.indexOf("UCBrowser") >= 0 || ex.indexOf("UCWEB") >= 0) { // UC浏览器
-        bUA = "UCBrowser";
-    } else if (ex.indexOf("Opera") >= 0) {
-        bUA = "Opera";
-    } else if (ex.indexOf("Safari") >= 0) { // 苹果浏览器
-        bUA = "Safari";
-    } else if (ex.indexOf("Netscape") >= 0) {
-        bUA = "Netscape";
-    } else if (ex.indexOf("like Gecko") >= 0 && ex.indexOf("Trident") >= 0) {
-        bUA = "Internet Explorer 11 Or Later"; //IE11 以后，不再用 MSIE
-    } else {
-        bUA = "Other Broswer";
+    function initTipWin() {
+        var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+        var weixinTip = $('<div id="weixinTip"><p><img src="/images/live_weixin.png" alt="微信打开" style="width: 347px"/></p></div>');
+        $("body").append(weixinTip);
+        $("#weixinTip").css({
+            "position":"fixed",
+            "left":"0",
+            "top":"0",
+            "height":winHeight,
+            "width":"100%",
+            "z-index":"1000",
+            "background-color":"rgba(0,0,0,0.8)",
+            "filter":"alpha(opacity=80)",
+        });
+        $("#weixinTip p").css({
+            "text-align":"center",
+            "margin-top":"10%",
+            "padding-left":"5%",
+            "padding-right":"5%"
+        });
     }
-    return bUA;
-}
 
 </script>
 </html>

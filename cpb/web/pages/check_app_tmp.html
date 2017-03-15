@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>诚品宝</title>
+    <link href="../css/check_app.css" rel="stylesheet">
+</head>
+<body>
+<div class="circle">
+    <a id="go" class="blink" href="#" style="display: none;">点击屏幕继续</a>
+</div>
+</body>
+<script language="JavaScript" src="../scripts/js/jquery-3.1.0.min.js"></script>
+<script>
+var APPCommon = {
+    u : navigator.userAgent,
+    androidIntent: 'intent://splash/#Intent;scheme=cundong;package=com.cheng315.nfc;category=android.intent.category.DEFAULT;' +
+        'action=android.intent.action.VIEW;S.browser_fallback_url=http%3A%2F%2Fm.315cheng.com%2Fpages%2Fdownload_app.html;end',
+    downAppUrl: '/pages/download_app.html',
+    openApp : function() {
+        var _this = this;
+        //微信或非android设备
+        if(this.isWeixin() || _this.u.indexOf('Android') < 0) {
+            window.location = this.downAppUrl;
+            return;
+        }
+
+        /*1.先判断uc 360
+         2.判断chrome
+         3.判断非chrome*/
+
+        /*var aLink = document.createElement("a");
+        aLink.style.cssText = "display:none;width:0px;height:0px;";
+        aLink.href = 'cundong://splash';
+        document.body.appendChild(aLink);
+        aLink.click();*/
+
+        if(_this.u.indexOf("UCBrowser") >= 0 && _this.u.indexOf('HUAWEI') >=0) {
+            window.location = 'cundong://splash';
+            window.location = _this.downAppUrl;
+        } else if(_this.u.indexOf("UCBrowser") >= 0 || _this.u.indexOf("360") >= 0
+                || _this.u.indexOf("QQ") >= 0 || _this.u.indexOf("Chrome") < 0
+                || _this.u.indexOf("XiaoMi") >=0) {
+            window.location = 'cundong://splash';
+            setTimeout(function(){
+                window.location=_this.downAppUrl;
+            },50);
+        } else if(_this.u.indexOf("Chrome") >= 0 && _this.u.indexOf("Safari") >= 0) {
+            $('#go').show();
+            $('#go').attr('href', _this.androidIntent);
+            $('.circle').css('height', window.screen.availHeight);
+            $('.circle').on('click', function () {
+                window.location.href = _this.androidIntent;
+            });
+        }
+    },
+    isWeixin: function(){ //判断是否是微信
+        var ua = this.u.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    createIframe : function() {
+        var iframe;
+        return function(){
+            if(iframe){
+                return iframe;
+            }else{
+                iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                return iframe;
+            }
+        }
+    }
+};
+
+$(function () {
+    APPCommon.openApp();
+});
+
+</script>
+</html>
